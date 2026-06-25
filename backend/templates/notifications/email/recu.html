@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><title>Candidature reçue</title></head>
+<body style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
+  <div style="background: #1e3a5f; color: white; padding: 20px; text-align: center;">
+    <h1>{{ company }}</h1>
+  </div>
+  <div style="padding: 24px;">
+    <p>Bonjour <strong>{{ candidate_name }}</strong>,</p>
+    <p>Nous avons bien reçu votre candidature pour le poste de <strong>{{ job_title }}</strong>.</p>
+    <p>Votre numéro de dossier est : <strong>#{{ application_id }}</strong></p>
+    <p>Notre équipe RH analysera votre profil et vous tiendra informé(e) de l'avancement.</p>
+    <p>Cordialement,<br>L'équipe RH — {{ company }}</p>
+  </div>
+</body>
+</html>

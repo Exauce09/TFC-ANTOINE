@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><title>Convocation</title></head>
+<body style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
+  <div style="background: #1e40af; color: white; padding: 20px; text-align: center;">
+    <h1>{{ company }}</h1>
+  </div>
+  <div style="padding: 24px;">
+    <p>Bonjour <strong>{{ candidate_name }}</strong>,</p>
+    <p>Nous avons le plaisir de vous convoquer à un entretien pour le poste de <strong>{{ job_title }}</strong>.</p>
+    {% if interview_date %}<p><strong>Date :</strong> {{ interview_date }}</p>{% endif %}
+    {% if interview_location %}<p><strong>Lieu :</strong> {{ interview_location }}</p>{% endif %}
+    {% if interview_contact %}<p><strong>Contact :</strong> {{ interview_contact }}</p>{% endif %}
+    <p>Merci de confirmer votre disponibilité en répondant à cet e-mail.</p>
+    <p>Cordialement,<br>L'équipe RH — {{ company }}</p>
+  </div>
+</body>
+</html>
