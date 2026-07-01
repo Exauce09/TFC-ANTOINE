@@ -28,6 +28,11 @@ class JobOffer(models.Model):
     location = models.CharField(max_length=100, default='Kinshasa')
     deadline = models.DateField()
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.ACTIVE)
+    image_key = models.CharField(
+        max_length=50,
+        blank=True,
+        help_text='Clé image frontend (commercial, logistique, it, etc.)',
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

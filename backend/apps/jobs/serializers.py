@@ -23,7 +23,7 @@ class JobOfferSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'department', 'department_name', 'title', 'description',
             'required_skills', 'min_experience', 'required_degree', 'location',
-            'deadline', 'status', 'application_count', 'created_at', 'updated_at',
+            'deadline', 'status', 'image_key', 'application_count', 'created_at', 'updated_at',
         )
 
     def get_application_count(self, obj):
@@ -37,5 +37,5 @@ class JobOfferListSerializer(serializers.ModelSerializer):
         model = JobOffer
         fields = (
             'id', 'department', 'department_name', 'title', 'location',
-            'deadline', 'status', 'min_experience', 'required_skills',
+            'deadline', 'status', 'min_experience', 'required_skills', 'image_key',
         )

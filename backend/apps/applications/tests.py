@@ -56,6 +56,13 @@ class IntegrationTests(TestCase):
         response = self.client.get('/api/applications/')
         self.assertEqual(response.status_code, 200)
 
+    def test_candidate_profile_endpoint(self):
+        self.client.force_authenticate(user=self.candidate)
+        response = self.client.get('/api/auth/profile/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('profile', response.data)
+        self.assertIn('user', response.data)
+
     def test_candidate_sees_only_own_applications(self):
         self.client.force_authenticate(user=self.candidate)
         response = self.client.get('/api/applications/')

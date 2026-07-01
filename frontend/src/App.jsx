@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Jobs from './pages/Jobs'
+import About from './pages/About'
 import JobDetail from './pages/JobDetail'
 import Apply from './pages/Apply'
 import MyApplications from './pages/MyApplications'
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="jobs" element={<Jobs />} />
+            <Route path="a-propos" element={<About />} />
             <Route path="jobs/:id" element={<JobDetail />} />
             <Route path="jobs/:id/apply" element={
               <PrivateRoute><Apply /></PrivateRoute>

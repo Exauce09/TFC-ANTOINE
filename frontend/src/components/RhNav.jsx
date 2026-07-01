@@ -14,7 +14,8 @@ export default function RhNav() {
   const isAdmin = user?.role === 'admin'
 
   return (
-    <nav className="flex flex-wrap gap-2 mb-6 border-b pb-4">
+    <nav className="flex flex-wrap gap-2 mb-6 border-b pb-4 items-center">
+      <Link to="/" className="text-sm text-galaxy-700 hover:underline mr-2">← Espace public</Link>
       {links.map((link) => (
         <Link
           key={link.to}

@@ -31,6 +31,10 @@ export const authAPI = {
   register: (data) => api.post('/auth/register/', data),
   me: () => api.get('/auth/me/'),
   updateProfile: (data) => api.patch('/auth/me/', data),
+  getCandidateProfile: () => api.get('/auth/profile/'),
+  updateCandidateProfile: (formData) => api.patch('/auth/profile/', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
 }
 
 export const jobsAPI = {

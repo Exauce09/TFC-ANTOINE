@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from datetime import timedelta
 
-from apps.accounts.models import User
+from apps.accounts.models import User, CandidateProfile
 from apps.jobs.models import Department, JobOffer
 from apps.applications.models import Application
 from apps.scoring.engine import score_application
@@ -87,6 +87,7 @@ class Command(BaseCommand):
                 'required_skills': ['vente', 'prospection', 'négociation', 'crm'],
                 'min_experience': 2,
                 'required_degree': 'Licence commerce',
+                'image_key': 'commercial',
             },
             {
                 'department': 'Logistique',
@@ -95,6 +96,7 @@ class Command(BaseCommand):
                 'required_skills': ['logistique', 'stock', 'inventaire', 'supply chain'],
                 'min_experience': 1,
                 'required_degree': 'Graduat logistique',
+                'image_key': 'logistique',
             },
             {
                 'department': 'IT',
@@ -103,6 +105,7 @@ class Command(BaseCommand):
                 'required_skills': ['python', 'django', 'react', 'javascript'],
                 'min_experience': 2,
                 'required_degree': 'Licence informatique',
+                'image_key': 'it',
             },
         ]
 
@@ -119,8 +122,12 @@ class Command(BaseCommand):
                     'location': 'Kinshasa',
                     'deadline': deadline,
                     'status': JobOffer.Status.ACTIVE,
+                    'image_key': data.get('image_key', ''),
                 },
             )
+            if job.image_key != data.get('image_key', ''):
+                job.image_key = data.get('image_key', '')
+                job.save(update_fields=['image_key'])
             jobs[data['title']] = job
 
         commercial_job = jobs['Commercial terrain Kinshasa']
@@ -137,6 +144,45 @@ class Command(BaseCommand):
             )
             user.set_password('candidat123')
             user.save()
+
+            profile, _ = CandidateProfile.objects.get_or_create(user=user)
+            profile_data = {
+                'jean.mutombo@email.cd': {
+                    'diplome': 'Licence commerce', 'field_of_study': 'Commerce et marketing',
+                    'years_experience': 5, 'current_position': 'Commercial terrain',
+                    'skills': ['vente', 'prospection', 'négociation', 'crm'],
+                    'bio': 'Commercial expérimenté sur le terrain à Kinshasa.',
+                },
+                'marie.kabila@email.cd': {
+                    'diplome': 'Graduat infirmier', 'field_of_study': 'Soins infirmiers',
+                    'years_experience': 1, 'current_position': 'Infirmière',
+                    'skills': ['soins', 'patients', 'urgences'],
+                    'bio': 'Infirmière débutante motivée.',
+                },
+                'paul.lumumba@email.cd': {
+                    'diplome': 'Graduat commerce', 'field_of_study': 'Commerce',
+                    'years_experience': 2, 'current_position': 'Assistant commercial',
+                    'skills': ['vente', 'détail', 'relation client'],
+                    'bio': 'Assistant commercial en vente au détail.',
+                },
+                'grace.mukendi@email.cd': {
+                    'diplome': 'Bac+3 logistique', 'field_of_study': 'Logistique et supply chain',
+                    'years_experience': 4, 'current_position': 'Logisticienne',
+                    'skills': ['logistique', 'stock', 'inventaire', 'supply chain'],
+                    'bio': 'Spécialiste logistique avec 4 ans d\'expérience.',
+                },
+                'david.tshisekedi@email.cd': {
+                    'diplome': 'Licence informatique', 'field_of_study': 'Développement web',
+                    'years_experience': 3, 'current_position': 'Développeur web',
+                    'skills': ['python', 'django', 'react', 'javascript'],
+                    'bio': 'Développeur full-stack passionné.',
+                },
+            }
+            pdata = profile_data.get(sample['email'], {})
+            if pdata:
+                for k, v in pdata.items():
+                    setattr(profile, k, v)
+                profile.save()
 
             if Application.objects.filter(candidate=user, job_offer=commercial_job).exists():
                 continue

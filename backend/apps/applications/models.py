@@ -28,8 +28,10 @@ class Application(models.Model):
         on_delete=models.CASCADE,
         related_name='applications',
     )
-    cv_file = models.FileField(upload_to=cv_upload_path)
+    cv_file = models.FileField(upload_to=cv_upload_path, blank=True)
     cover_letter = models.TextField(blank=True)
+    motivation_answers = models.JSONField(default=dict, blank=True)
+    availability_date = models.DateField(null=True, blank=True)
     cv_text = models.TextField(blank=True)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.RECU)
     auto_score = models.FloatField(null=True, blank=True)

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { applicationsAPI } from '../api/client'
+import ApplicationTimeline from '../components/ApplicationTimeline'
+import CandidateLayout from '../components/CandidateLayout'
 import StatusBadge from '../components/StatusBadge'
 
 export default function MyApplications() {
@@ -14,42 +16,70 @@ export default function MyApplications() {
   }, [])
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-galaxy-700 mb-6">Mes candidatures</h1>
+    <CandidateLayout
+      title="Mes candidatures"
+      subtitle="Suivez l'avancement de vos dossiers en temps réel. Vous serez notifié par e-mail et SMS à chaque étape."
+    >
       {loading ? (
-        <p className="text-slate-500">Chargement...</p>
+        <div className="bg-white rounded-2xl border p-12 text-center text-slate-500">Chargement de vos dossiers...</div>
       ) : applications.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-slate-500 mb-4">Vous n'avez pas encore postulé.</p>
-          <Link to="/jobs" className="text-galaxy-700 font-medium hover:underline">Voir les offres</Link>
+        <div className="bg-white rounded-2xl border p-12 text-center">
+          <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
+            <span className="text-2xl text-galaxy-700 font-bold">0</span>
+          </div>
+          <h2 className="text-xl font-bold text-galaxy-700 mb-2">Aucune candidature</h2>
+          <p className="text-slate-500 mb-6">Vous n'avez pas encore postulé à une offre Maison Galaxy.</p>
+          <Link to="/jobs"
+            className="inline-block bg-galaxy-700 text-white px-6 py-3 rounded-xl font-medium hover:bg-galaxy-500">
+            Découvrir les offres
+          </Link>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-6">
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { label: 'Total', value: applications.length },
+              { label: 'En cours', value: applications.filter((a) => !['refuse', 'convocation'].includes(a.status)).length },
+              { label: 'Shortlist / Entretien', value: applications.filter((a) => ['shortlist', 'convocation'].includes(a.status)).length },
+            ].map((s) => (
+              <div key={s.label} className="bg-white rounded-xl border p-4 text-center">
+                <div className="text-2xl font-bold text-galaxy-700">{s.value}</div>
+                <div className="text-xs text-slate-500">{s.label}</div>
+              </div>
+            ))}
+          </div>
+
           {applications.map((app) => (
-            <div key={app.id} className="bg-white rounded-xl shadow-sm border p-6">
-              <div className="flex justify-between items-start">
+            <article key={app.id} className="bg-white rounded-2xl border shadow-sm overflow-hidden">
+              <div className="p-6 border-b bg-slate-50/50 flex flex-wrap justify-between gap-4 items-start">
                 <div>
-                  <h2 className="font-bold text-lg">{app.job_title}</h2>
-                  <p className="text-sm text-slate-500">Dossier #{app.id} · {new Date(app.created_at).toLocaleDateString('fr-FR')}</p>
-                </div>
-                <StatusBadge status={app.status} />
-              </div>
-              <div className="mt-4 flex items-center gap-4">
-                <div className="flex-1">
-                  <div className="flex gap-1">
-                    {['recu', 'en_analyse', 'shortlist', 'convocation'].map((step, i) => (
-                      <div key={step} className={`h-2 flex-1 rounded-full ${
-                        ['recu', 'en_analyse', 'shortlist', 'refuse', 'convocation'].indexOf(app.status) >= i
-                          ? 'bg-galaxy-500' : 'bg-slate-200'
-                      }`} />
-                    ))}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h2 className="font-bold text-xl text-galaxy-700">{app.job_title}</h2>
+                    <StatusBadge status={app.status} />
                   </div>
+                  <p className="text-sm text-slate-500 mt-1">
+                    Dossier <strong>#{app.id}</strong> · Déposé le {new Date(app.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </p>
                 </div>
+                <Link to={`/jobs/${app.job_offer}`}
+                  className="text-sm text-galaxy-700 border border-galaxy-200 px-3 py-1.5 rounded-lg hover:bg-galaxy-50">
+                  Voir l'offre
+                </Link>
               </div>
-            </div>
+              <div className="p-6">
+                <p className="text-sm font-medium text-slate-600 mb-1">Progression de votre candidature</p>
+                <ApplicationTimeline status={app.status} />
+                {app.status === 'convocation' && app.interview_date && (
+                  <div className="mt-4 p-4 bg-purple-50 border border-purple-100 rounded-xl text-sm">
+                    <strong>Convocation entretien</strong>
+                    {app.interview_location && <p className="text-slate-600 mt-1">📍 {app.interview_location}</p>}
+                  </div>
+                )}
+              </div>
+            </article>
           ))}
         </div>
       )}
-    </div>
+    </CandidateLayout>
   )
 }
