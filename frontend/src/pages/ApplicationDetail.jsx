@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { applicationsAPI, notificationsAPI } from '../api/client'
+import RhNav from '../components/RhNav'
 import ScoreBadge from '../components/ScoreBadge'
 import StatusBadge from '../components/StatusBadge'
 
@@ -13,15 +14,32 @@ export default function ApplicationDetail() {
     interview_date: '', interview_location: 'Siège Maison Galaxy, Kinshasa',
     interview_contact: 'rh@maisongalaxy.cd',
   })
+  const [finalScore, setFinalScore] = useState('')
 
   const load = () => {
-    applicationsAPI.get(id).then(({ data }) => setApp(data))
+    applicationsAPI.get(id).then(({ data }) => {
+      setApp(data)
+      setFinalScore(data.final_score ?? data.auto_score ?? '')
+    })
     notificationsAPI.list({ application: id }).then(({ data }) => {
       setNotifications(data.results || data)
     })
   }
 
   useEffect(() => { load() }, [id])
+
+  const saveScore = async () => {
+    setActionLoading(true)
+    try {
+      await applicationsAPI.updateStatus(id, {
+        status: app.status,
+        final_score: Number(finalScore),
+      })
+      load()
+    } finally {
+      setActionLoading(false)
+    }
+  }
 
   const updateStatus = async (status) => {
     setActionLoading(true)
@@ -45,7 +63,8 @@ export default function ApplicationDetail() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <Link to="/dashboard" className="text-galaxy-700 text-sm hover:underline">← Retour au dashboard</Link>
+      <RhNav />
+      <Link to="/dashboard" className="text-galaxy-700 text-sm hover:underline">← Retour aux candidatures</Link>
 
       <div className="bg-white rounded-xl shadow-sm border p-6 mt-4">
         <div className="flex justify-between items-start">
@@ -89,6 +108,19 @@ export default function ApplicationDetail() {
             <p className="text-sm text-slate-600 whitespace-pre-wrap">{app.cover_letter}</p>
           </div>
         )}
+
+        <div className="mt-6 flex items-end gap-3">
+          <div>
+            <label className="block text-xs text-slate-500 mb-1">Ajuster score final (0-100)</label>
+            <input type="number" min="0" max="100" step="0.1" value={finalScore}
+              onChange={(e) => setFinalScore(e.target.value)}
+              className="border rounded px-2 py-1 text-sm w-24" />
+          </div>
+          <button onClick={saveScore} disabled={actionLoading}
+            className="bg-galaxy-700 text-white px-3 py-1 rounded text-sm disabled:opacity-50">
+            Enregistrer score
+          </button>
+        </div>
 
         <div className="mt-6 flex flex-wrap gap-2">
           <button onClick={() => updateStatus('shortlist')} disabled={actionLoading}

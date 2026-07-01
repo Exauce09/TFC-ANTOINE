@@ -58,7 +58,11 @@ export default function Apply() {
         </div>
         <label className="flex items-start gap-2 text-sm">
           <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1" />
-          J'accepte que mes données personnelles soient traitées par Maison Galaxy dans le cadre de ce recrutement et que je sois notifié(e) par e-mail et SMS.
+          <span>
+            J'accepte que mes données personnelles soient traitées par Maison Galaxy dans le cadre de ce recrutement
+            et que je sois notifié(e) par e-mail et SMS.{' '}
+            <a href="/privacy" target="_blank" className="text-galaxy-700 underline">Politique de confidentialité</a>
+          </span>
         </label>
         <button type="submit" disabled={loading}
           className="w-full bg-galaxy-700 text-white py-2 rounded-lg font-medium hover:bg-galaxy-500 disabled:opacity-50">

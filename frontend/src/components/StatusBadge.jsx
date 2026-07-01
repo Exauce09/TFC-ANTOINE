@@ -4,6 +4,9 @@ const STATUS_LABELS = {
   shortlist: 'Shortlist',
   refuse: 'Refusé',
   convocation: 'Convocation',
+  draft: 'Brouillon',
+  active: 'Active',
+  closed: 'Clôturée',
 }
 
 const STATUS_COLORS = {
@@ -12,6 +15,9 @@ const STATUS_COLORS = {
   shortlist: 'bg-green-100 text-green-800',
   refuse: 'bg-red-100 text-red-800',
   convocation: 'bg-purple-100 text-purple-800',
+  draft: 'bg-slate-100 text-slate-700',
+  active: 'bg-green-100 text-green-800',
+  closed: 'bg-red-100 text-red-700',
 }
 
 export default function StatusBadge({ status }) {

@@ -15,8 +15,11 @@ export default function Login() {
     try {
       const user = await login(email, password)
       navigate(user.role === 'candidat' ? '/my-applications' : '/dashboard')
-    } catch {
-      setError('Identifiants incorrects.')
+    } catch (err) {
+      const msg = err.response?.data?.detail
+        || err.response?.data?.non_field_errors?.[0]
+        || (err.code === 'ERR_NETWORK' ? 'Impossible de joindre le serveur. Vérifiez que le backend est démarré.' : null)
+      setError(msg || 'Identifiants incorrects.')
     }
   }
 

@@ -51,9 +51,8 @@ class Command(BaseCommand):
                 'is_staff': True, 'is_superuser': True,
             },
         )
-        if not admin.has_usable_password():
-            admin.set_password('admin123')
-            admin.save()
+        admin.set_password('admin123')
+        admin.save()
 
         recruteur, _ = User.objects.get_or_create(
             email='rh@maisongalaxy.cd',
@@ -64,9 +63,8 @@ class Command(BaseCommand):
                 'phone': '+243900000099',
             },
         )
-        if not recruteur.has_usable_password():
-            recruteur.set_password('rh123456')
-            recruteur.save()
+        recruteur.set_password('rh123456')
+        recruteur.save()
 
         departments_data = [
             ('Direction', 'Direction générale Maison Galaxy'),
@@ -137,9 +135,8 @@ class Command(BaseCommand):
                     'role': User.Role.CANDIDAT,
                 },
             )
-            if not user.has_usable_password():
-                user.set_password('candidat123')
-                user.save()
+            user.set_password('candidat123')
+            user.save()
 
             if Application.objects.filter(candidate=user, job_offer=commercial_job).exists():
                 continue

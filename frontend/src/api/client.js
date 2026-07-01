@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+const API_URL = import.meta.env.VITE_API_URL || '/api'
 
 const api = axios.create({
   baseURL: API_URL,
@@ -30,6 +30,7 @@ export const authAPI = {
   login: (email, password) => api.post('/auth/login/', { email, password }),
   register: (data) => api.post('/auth/register/', data),
   me: () => api.get('/auth/me/'),
+  updateProfile: (data) => api.patch('/auth/me/', data),
 }
 
 export const jobsAPI = {
@@ -42,6 +43,9 @@ export const jobsAPI = {
 
 export const departmentsAPI = {
   list: () => api.get('/departments/'),
+  create: (data) => api.post('/departments/', data),
+  update: (id, data) => api.patch(`/departments/${id}/`, data),
+  delete: (id) => api.delete(`/departments/${id}/`),
 }
 
 export const applicationsAPI = {
@@ -59,6 +63,10 @@ export const applicationsAPI = {
 
 export const notificationsAPI = {
   list: (params) => api.get('/notifications/', { params }),
+}
+
+export const reportsAPI = {
+  summary: (params) => api.get('/reports/summary/', { params }),
 }
 
 export default api

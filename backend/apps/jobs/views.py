@@ -1,7 +1,7 @@
 from rest_framework import viewsets, permissions
 from django.utils import timezone
 
-from apps.accounts.views import IsRecruiter
+from apps.accounts.views import IsAdmin, IsRecruiter
 from .models import Department, JobOffer
 from .serializers import DepartmentSerializer, JobOfferListSerializer, JobOfferSerializer
 
@@ -13,7 +13,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ('list', 'retrieve'):
             return [permissions.AllowAny()]
-        return [IsRecruiter()]
+        return [IsAdmin()]
 
 
 class JobOfferViewSet(viewsets.ModelViewSet):

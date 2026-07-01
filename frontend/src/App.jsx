@@ -10,11 +10,18 @@ import Apply from './pages/Apply'
 import MyApplications from './pages/MyApplications'
 import Dashboard from './pages/Dashboard'
 import ApplicationDetail from './pages/ApplicationDetail'
+import ManageJobs from './pages/ManageJobs'
+import Reports from './pages/Reports'
+import NotificationsPage from './pages/NotificationsPage'
+import ManageDepartments from './pages/ManageDepartments'
+import Profile from './pages/Profile'
+import Privacy from './pages/Privacy'
 
-function PrivateRoute({ children, recruiterOnly = false }) {
+function PrivateRoute({ children, recruiterOnly = false, adminOnly = false }) {
   const { user, isRecruiter } = useAuth()
   if (!user) return <Navigate to="/login" />
   if (recruiterOnly && !isRecruiter) return <Navigate to="/" />
+  if (adminOnly && user.role !== 'admin') return <Navigate to="/dashboard" />
   return children
 }
 
@@ -35,8 +42,24 @@ export default function App() {
             <Route path="my-applications" element={
               <PrivateRoute><MyApplications /></PrivateRoute>
             } />
+            <Route path="profile" element={
+              <PrivateRoute><Profile /></PrivateRoute>
+            } />
+            <Route path="privacy" element={<Privacy />} />
             <Route path="dashboard" element={
               <PrivateRoute recruiterOnly><Dashboard /></PrivateRoute>
+            } />
+            <Route path="dashboard/jobs" element={
+              <PrivateRoute recruiterOnly><ManageJobs /></PrivateRoute>
+            } />
+            <Route path="dashboard/reports" element={
+              <PrivateRoute recruiterOnly><Reports /></PrivateRoute>
+            } />
+            <Route path="dashboard/notifications" element={
+              <PrivateRoute recruiterOnly><NotificationsPage /></PrivateRoute>
+            } />
+            <Route path="dashboard/departments" element={
+              <PrivateRoute recruiterOnly adminOnly><ManageDepartments /></PrivateRoute>
             } />
             <Route path="dashboard/applications/:id" element={
               <PrivateRoute recruiterOnly><ApplicationDetail /></PrivateRoute>

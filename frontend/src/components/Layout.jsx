@@ -30,6 +30,7 @@ export default function Layout() {
                 ) : (
                   <Link to="/my-applications" className="hover:text-blue-200">Mes candidatures</Link>
                 )}
+                <Link to="/profile" className="hover:text-blue-200">Profil</Link>
                 <span className="text-blue-200">{user.first_name}</span>
                 <button onClick={handleLogout} className="bg-white/10 px-3 py-1 rounded hover:bg-white/20">
                   Déconnexion
@@ -50,7 +51,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <footer className="bg-galaxy-900 text-blue-200 text-center py-4 text-sm">
-        © 2026 Maison Galaxy Kinshasa — SIGER
+        © 2026 Maison Galaxy Kinshasa — SIGER · <Link to="/privacy" className="underline hover:text-white">Confidentialité</Link>
       </footer>
     </div>
   )

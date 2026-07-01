@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { applicationsAPI, jobsAPI } from '../api/client'
+import RhNav from '../components/RhNav'
 import ScoreBadge from '../components/ScoreBadge'
 import StatusBadge from '../components/StatusBadge'
 
@@ -45,7 +46,8 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-galaxy-700 mb-6">Dashboard RH</h1>
+      <RhNav />
+      <h1 className="text-2xl font-bold text-galaxy-700 mb-6">Candidatures</h1>
 
       <div className="flex flex-wrap gap-4 mb-6 items-center">
         <select value={selectedJob} onChange={(e) => setSelectedJob(e.target.value)}

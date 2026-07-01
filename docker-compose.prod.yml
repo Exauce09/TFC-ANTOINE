@@ -1,0 +1,59 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-siger}
+      POSTGRES_USER: ${POSTGRES_USER:-siger}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-siger}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    env_file: .env
+    environment:
+      DEBUG: "False"
+      POSTGRES_HOST: db
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - media_data:/app/media
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+  celery:
+    build: ./backend
+    command: celery -A config worker -l info
+    env_file: .env
+    environment:
+      DEBUG: "False"
+      POSTGRES_HOST: db
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - media_data:/app/media
+    depends_on:
+      - backend
+      - redis
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  media_data:
