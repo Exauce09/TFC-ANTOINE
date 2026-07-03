@@ -51,7 +51,7 @@ AFRICASTALKING_SENDER=MaisonGalaxy
 ```bash
 docker compose -f docker-compose.prod.yml up --build -d
 docker compose -f docker-compose.prod.yml exec backend python manage.py migrate
-docker compose -f docker-compose.prod.yml exec backend python manage.py seed_demo
+docker compose -f docker-compose.prod.yml exec backend python manage.py createsuperuser
 ```
 
 Le site est accessible sur le port **80**.
@@ -82,14 +82,15 @@ Internet → Nginx (port 80/443)
 
 Services Docker : `nginx`, `backend`, `celery`, `db` (PostgreSQL), `redis`
 
-## Comptes après seed
+## Premier compte admin
 
-| Rôle | E-mail | Mot de passe |
-|------|--------|--------------|
-| Admin | admin@maisongalaxy.cd | admin123 |
-| RH | rh@maisongalaxy.cd | rh123456 |
+Après le déploiement, créez le compte administrateur :
 
-**Changez ces mots de passe immédiatement en production.**
+```bash
+docker compose -f docker-compose.prod.yml exec backend python manage.py createsuperuser
+```
+
+Puis connectez-vous et configurez départements, offres et comptes RH via l'interface.
 
 ## Fonctionnalités incluses
 

@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import { jobsAPI } from '../api/client'
 import { useAuth } from '../context/AuthContext'
 import { getJobImage } from '../assets/images'
+import AnimatedImage from '../components/AnimatedImage'
 
 export default function JobDetail() {
   const { id } = useParams()
@@ -21,7 +22,7 @@ export default function JobDetail() {
   return (
     <div>
       <section className="relative h-56 flex items-end text-white overflow-hidden">
-        <img src={jobImage} alt={job.title} className="absolute inset-0 w-full h-full object-cover" />
+        <AnimatedImage variant="banner" src={jobImage} alt={job.title} />
         <div className="absolute inset-0 bg-galaxy-700/75" />
         <div className="relative max-w-3xl mx-auto px-4 pb-5 w-full">
           <Link to="/jobs" className="text-blue-200 text-sm hover:text-white">← Espace public / Offres</Link>

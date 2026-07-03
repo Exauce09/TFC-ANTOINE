@@ -6,6 +6,7 @@ export const IMAGES = {
   handshake: '/images/handshake.jpg',
   careers: '/images/careers.jpg',
   candidate: '/images/candidate.jpg',
+  rh: '/images/office.jpg',
   jobCommercial: '/images/job-commercial.jpg',
   jobLogistique: '/images/job-logistique.jpg',
   jobIt: '/images/job-it.jpg',
@@ -27,6 +28,7 @@ const IMAGE_KEY_MAP = {
 
 export function getJobImage(job) {
   if (!job) return IMAGES.careers
+  if (job.image_url) return job.image_url
   if (job.image_key && IMAGE_KEY_MAP[job.image_key]) {
     return IMAGE_KEY_MAP[job.image_key]
   }

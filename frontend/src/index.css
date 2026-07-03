@@ -5,3 +5,10 @@
 body {
   @apply bg-slate-50 text-slate-900;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe\:animate-ken-burns,
+  .motion-safe\:animate-ken-burns-subtle {
+    animation: none !important;
+  }
+}

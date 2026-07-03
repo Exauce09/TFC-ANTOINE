@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { IMAGES } from '../assets/images'
+import AnimatedImage from './AnimatedImage'
 
 const LINKS = [
   { to: '/my-applications', label: 'Mes candidatures' },
@@ -13,7 +14,7 @@ export default function CandidateLayout({ children, title, subtitle }) {
   return (
     <div className="min-h-[calc(100vh-8rem)]">
       <section className="relative bg-galaxy-700 text-white overflow-hidden">
-        <img src={IMAGES.candidate} alt="" className="absolute inset-0 w-full h-full object-cover opacity-40" />
+        <AnimatedImage variant="banner" src={IMAGES.candidate} alt="" imgClassName="opacity-40" />
         <div className="absolute inset-0 bg-gradient-to-r from-galaxy-900/90 to-galaxy-700/70" />
         <div className="relative max-w-6xl mx-auto px-4 py-10">
           <span className="text-blue-200 text-sm">Espace candidat</span>

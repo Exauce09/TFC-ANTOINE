@@ -11,17 +11,25 @@ class CandidateProfileInline(admin.StackedInline):
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    list_display = ('email', 'first_name', 'last_name', 'role', 'phone', 'is_active')
-    list_filter = ('role', 'is_active')
-    search_fields = ('email', 'first_name', 'last_name', 'phone')
+    list_display = ('email', 'first_name', 'last_name', 'role', 'phone', 'is_staff', 'is_active')
+    list_filter = ('role', 'is_staff', 'is_active')
+    search_fields = ('email', 'first_name', 'last_name', 'phone', 'username')
     ordering = ('email',)
     inlines = (CandidateProfileInline,)
 
-    fieldsets = BaseUserAdmin.fieldsets + (
-        ('SIGER', {'fields': ('role', 'phone')}),
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Informations personnelles', {'fields': ('username', 'first_name', 'last_name', 'phone')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('SIGER', {'fields': ('role',)}),
+        ('Dates importantes', {'fields': ('last_login', 'date_joined')}),
     )
-    add_fieldsets = BaseUserAdmin.add_fieldsets + (
-        ('SIGER', {'fields': ('role', 'phone', 'email', 'first_name', 'last_name')}),
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'username', 'first_name', 'last_name', 'password1', 'password2'),
+        }),
+        ('SIGER', {'fields': ('role', 'phone', 'is_staff', 'is_superuser')}),
     )
 
 

@@ -36,7 +36,7 @@ py -m venv venv
 $env:USE_SQLITE="true"
 $env:DEBUG="true"
 .\venv\Scripts\python manage.py migrate
-.\venv\Scripts\python manage.py seed_demo
+.\venv\Scripts\python manage.py createsuperuser
 .\venv\Scripts\python manage.py runserver 127.0.0.1:8001
 
 # Frontend (autre terminal)
@@ -45,15 +45,17 @@ npm install
 npm run dev
 ```
 
+**Admin Django** : http://127.0.0.1:8001/admin/
+
+- Identifiant : **adresse e-mail** (pas le nom d'utilisateur)
+- Mot de passe : celui défini avec `createsuperuser`
+- Seuls les comptes avec `is_staff` peuvent se connecter (un compte candidat créé via l'inscription publique n'y a pas accès)
+
+Avec `createsuperuser`, le **premier champ demandé est l'e-mail** (ex. `admin@maisongalaxy.cd`), puis le nom d'utilisateur, prénom et nom.
+
 **Site :** http://127.0.0.1:5180
 
-## Comptes de démo
-
-| Rôle | E-mail | Mot de passe |
-|------|--------|--------------|
-| Admin | admin@maisongalaxy.cd | admin123 |
-| RH | rh@maisongalaxy.cd | rh123456 |
-| Candidat | jean.mutombo@email.cd | candidat123 |
+La base démarre vide. Créez un compte admin avec `createsuperuser`, puis configurez départements et offres via l'interface RH.
 
 ## Hébergement production
 

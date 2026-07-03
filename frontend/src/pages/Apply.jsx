@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { applicationsAPI, authAPI, jobsAPI } from '../api/client'
 import CandidateLayout from '../components/CandidateLayout'
+import AnimatedImage from '../components/AnimatedImage'
 import { getJobImage } from '../assets/images'
 
 const STEPS = [
@@ -282,7 +283,12 @@ export default function Apply() {
         </div>
 
         <aside className="space-y-4">
-          <img src={jobImage} alt={job.title} className="rounded-2xl w-full h-48 object-cover border shadow-sm" />
+          <AnimatedImage
+            variant="inline"
+            src={jobImage}
+            alt={job.title}
+            className="rounded-2xl w-full h-48 border shadow-sm"
+          />
           <div className="bg-white rounded-2xl border p-5 text-sm">
             <h3 className="font-bold text-galaxy-700 mb-3">Récapitulatif de l'offre</h3>
             <ul className="space-y-2 text-slate-600">

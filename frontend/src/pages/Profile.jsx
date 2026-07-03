@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { authAPI } from '../api/client'
 import CandidateLayout from '../components/CandidateLayout'
+import PasswordInput from '../components/PasswordInput'
 
 const SECTIONS = [
-  { id: 'identite', label: 'Identité', icon: '👤' },
-  { id: 'formation', label: 'Formation', icon: '🎓' },
-  { id: 'experience', label: 'Expérience', icon: '💼' },
-  { id: 'competences', label: 'Compétences', icon: '⚡' },
-  { id: 'cv', label: 'CV par défaut', icon: '📄' },
+  { id: 'identite', label: 'Identité' },
+  { id: 'formation', label: 'Formation' },
+  { id: 'experience', label: 'Expérience' },
+  { id: 'competences', label: 'Compétences' },
+  { id: 'cv', label: 'CV par défaut' },
 ]
 
 const DIPLOMES = [
@@ -137,11 +138,11 @@ export default function Profile() {
               key={s.id}
               type="button"
               onClick={() => setSection(s.id)}
-              className={`w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2 transition-colors ${
+              className={`w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                 section === s.id ? 'bg-galaxy-700 text-white' : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
-              <span>{s.icon}</span> {s.label}
+              {s.label}
             </button>
           ))}
         </nav>
@@ -199,12 +200,12 @@ export default function Profile() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className={labelClass}>Nouveau mot de passe</label>
-                    <input type="password" minLength={8} value={form.password}
+                    <PasswordInput minLength={8} value={form.password}
                       onChange={(e) => setForm({ ...form, password: e.target.value })} className={inputClass} />
                   </div>
                   <div>
                     <label className={labelClass}>Confirmer</label>
-                    <input type="password" value={form.password_confirm}
+                    <PasswordInput value={form.password_confirm}
                       onChange={(e) => setForm({ ...form, password_confirm: e.target.value })} className={inputClass} />
                   </div>
                 </div>
@@ -297,7 +298,7 @@ export default function Profile() {
                   <input type="file" accept=".pdf,.docx,.doc" id="profile-cv"
                     onChange={(e) => setCvFile(e.target.files[0])} className="hidden" />
                   <label htmlFor="profile-cv" className="cursor-pointer">
-                    <div className="text-4xl mb-2">📄</div>
+                    <p className="text-sm font-medium text-galaxy-700 mb-1">Sélectionner un fichier</p>
                     <p className="text-sm text-slate-600">
                       {cvFile ? cvFile.name : 'Cliquez pour sélectionner votre CV'}
                     </p>

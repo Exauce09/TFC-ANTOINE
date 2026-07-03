@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { IMAGES } from '../assets/images'
+import AnimatedImage from '../components/AnimatedImage'
+import PasswordInput from '../components/PasswordInput'
 
 const FIELDS = [
   { name: 'first_name', label: 'Prénom' },
@@ -40,7 +42,7 @@ export default function Register() {
   return (
     <div className="min-h-[calc(100vh-8rem)] grid md:grid-cols-2">
       <div className="hidden md:block relative">
-        <img src={IMAGES.careers} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <AnimatedImage variant="sidepanel" src={IMAGES.careers} alt="" />
         <div className="absolute inset-0 bg-galaxy-700/75 flex flex-col justify-center p-12 text-white">
           <h2 className="text-3xl font-bold mb-4">Rejoignez Maison Galaxy</h2>
           <ul className="space-y-3 text-blue-100 text-sm">
@@ -66,15 +68,13 @@ export default function Register() {
             ))}
             <div>
               <label className="block text-sm font-medium mb-1">Mot de passe (8 caractères min.)</label>
-              <input type="password" name="password" required minLength={8}
-                value={form.password} onChange={handleChange}
-                className="w-full border rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-galaxy-500 outline-none" />
+              <PasswordInput name="password" required minLength={8}
+                value={form.password} onChange={handleChange} />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Confirmer le mot de passe</label>
-              <input type="password" name="password_confirm" required
-                value={form.password_confirm} onChange={handleChange}
-                className="w-full border rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-galaxy-500 outline-none" />
+              <PasswordInput name="password_confirm" required
+                value={form.password_confirm} onChange={handleChange} />
             </div>
             <button type="submit" disabled={loading}
               className="w-full bg-galaxy-700 text-white py-3 rounded-xl font-medium hover:bg-galaxy-500 disabled:opacity-50">

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { departmentsAPI, jobsAPI } from '../api/client'
 import { getJobImage, IMAGES } from '../assets/images'
+import AnimatedImage from '../components/AnimatedImage'
 
 export default function Jobs() {
   const [jobs, setJobs] = useState([])
@@ -22,7 +23,7 @@ export default function Jobs() {
   return (
     <div>
       <section className="relative h-48 flex items-end text-white overflow-hidden">
-        <img src={IMAGES.careers} alt="Carrières" className="absolute inset-0 w-full h-full object-cover" />
+        <AnimatedImage variant="banner" src={IMAGES.careers} alt="Carrières" />
         <div className="absolute inset-0 bg-galaxy-700/80" />
         <div className="relative max-w-7xl mx-auto px-4 pb-6 w-full">
           <span className="text-blue-200 text-sm">Espace public</span>
@@ -54,12 +55,8 @@ export default function Jobs() {
           <div className="grid gap-6">
             {jobs.map((job) => (
               <div key={job.id} className="bg-white rounded-2xl shadow-sm border overflow-hidden flex flex-col md:flex-row hover:shadow-md transition-shadow">
-                <div className="md:w-48 h-36 md:h-auto flex-shrink-0">
-                  <img
-                    src={getJobImage(job)}
-                    alt={job.department_name}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="md:w-48 h-36 md:h-auto flex-shrink-0 overflow-hidden">
+                  <AnimatedImage variant="card" src={getJobImage(job)} alt={job.department_name} />
                 </div>
                 <div className="p-6 flex-1 flex justify-between items-start gap-4">
                   <div>

@@ -37,11 +37,21 @@ export const authAPI = {
   }),
 }
 
+const multipartHeaders = { headers: { 'Content-Type': 'multipart/form-data' } }
+
 export const jobsAPI = {
   list: (params) => api.get('/jobs/', { params }),
   get: (id) => api.get(`/jobs/${id}/`),
-  create: (data) => api.post('/jobs/', data),
-  update: (id, data) => api.patch(`/jobs/${id}/`, data),
+  create: (data) => (
+    data instanceof FormData
+      ? api.post('/jobs/', data, multipartHeaders)
+      : api.post('/jobs/', data)
+  ),
+  update: (id, data) => (
+    data instanceof FormData
+      ? api.patch(`/jobs/${id}/`, data, multipartHeaders)
+      : api.patch(`/jobs/${id}/`, data)
+  ),
   delete: (id) => api.delete(`/jobs/${id}/`),
 }
 

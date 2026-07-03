@@ -1,10 +1,12 @@
-export default function ScoreBadge({ score, recommendation }) {
+import { AiBadge } from './AiScorePanel'
+
+export default function ScoreBadge({ score, recommendation, showAi = false }) {
   if (score == null) {
-    return <span className="text-gray-400 text-sm">En attente</span>
+    return <span className="text-slate-400 text-sm">En attente</span>
   }
 
   let color = 'bg-red-100 text-red-800'
-  let label = 'Faible'
+  let label = 'Faible correspondance'
 
   if (score >= 70 || recommendation === 'shortlist') {
     color = 'bg-green-100 text-green-800'
@@ -15,11 +17,14 @@ export default function ScoreBadge({ score, recommendation }) {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ${color}`}>
-        {score.toFixed(1)}
-      </span>
-      <span className="text-xs text-gray-500">{label}</span>
+    <div className="flex flex-col gap-1">
+      <div className="flex items-center gap-2 flex-wrap">
+        {showAi && <AiBadge compact />}
+        <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ${color}`}>
+          {score.toFixed(1)}%
+        </span>
+      </div>
+      <span className="text-xs text-slate-500">{label}</span>
     </div>
   )
 }

@@ -1,5 +1,6 @@
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import UserMenu from './UserMenu'
 
 const PUBLIC_LINKS = [
   { to: '/', label: 'Accueil' },
@@ -8,14 +9,8 @@ const PUBLIC_LINKS = [
 ]
 
 export default function Layout() {
-  const { user, logout, isRecruiter } = useAuth()
-  const navigate = useNavigate()
+  const { user, isRecruiter } = useAuth()
   const { pathname } = useLocation()
-
-  const handleLogout = () => {
-    logout()
-    navigate('/')
-  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -44,30 +39,7 @@ export default function Layout() {
               {user ? (
                 <>
                   <span className="hidden sm:block w-px h-5 bg-white/30 mx-1" />
-                  {isRecruiter ? (
-                    <Link
-                      to="/dashboard"
-                      className={`px-2 py-1 rounded ${
-                        pathname.startsWith('/dashboard')
-                          ? 'bg-white text-galaxy-700 font-semibold'
-                          : 'hover:text-blue-200'
-                      }`}
-                    >
-                      Espace RH
-                    </Link>
-                ) : (
-                  <Link to="/my-applications" className={`px-2 py-1 rounded ${
-                    pathname.startsWith('/my-applications') || pathname === '/profile' || pathname.includes('/apply')
-                      ? 'bg-white/20 font-semibold' : 'hover:text-blue-200'
-                  }`}>
-                    Espace candidat
-                  </Link>
-                )}
-                  <Link to="/profile" className="hover:text-blue-200 px-2 hidden sm:block">Profil</Link>
-                  <span className="text-blue-200 hidden md:inline">{user.first_name}</span>
-                  <button onClick={handleLogout} className="bg-white/10 px-3 py-1 rounded hover:bg-white/20 ml-1">
-                    Déconnexion
-                  </button>
+                  <UserMenu />
                 </>
               ) : (
                 <>

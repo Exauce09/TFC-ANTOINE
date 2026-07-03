@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import { IMAGES } from '../assets/images'
+import AnimatedImage from '../components/AnimatedImage'
 
 export default function About() {
   return (
     <div>
       <section className="relative h-64 flex items-end text-white overflow-hidden">
-        <img src={IMAGES.office} alt="Maison Galaxy" className="absolute inset-0 w-full h-full object-cover" />
+        <AnimatedImage variant="banner" src={IMAGES.office} alt="Maison Galaxy" />
         <div className="absolute inset-0 bg-galaxy-900/70" />
         <div className="relative max-w-7xl mx-auto px-4 pb-8 w-full">
           <span className="text-blue-200 text-sm">Espace public</span>
@@ -45,8 +46,8 @@ export default function About() {
         </div>
 
         <div className="space-y-6">
-          <img src={IMAGES.team} alt="Notre équipe" className="rounded-2xl shadow-lg w-full h-56 object-cover" />
-          <img src={IMAGES.handshake} alt="Partenariat" className="rounded-2xl shadow-lg w-full h-56 object-cover" />
+          <AnimatedImage variant="gallery" src={IMAGES.team} alt="Notre équipe" className="rounded-2xl shadow-lg w-full h-56" />
+          <AnimatedImage variant="gallery" src={IMAGES.handshake} alt="Partenariat" className="rounded-2xl shadow-lg w-full h-56" />
           <div className="bg-galaxy-700 text-white rounded-2xl p-6">
             <h3 className="font-bold text-lg mb-2">Contact recrutement</h3>
             <p className="text-blue-100 text-sm">📍 Kinshasa, RDC</p>

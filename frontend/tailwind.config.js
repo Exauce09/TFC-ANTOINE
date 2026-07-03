@@ -12,6 +12,20 @@ export default {
           900: '#0f172a',
         },
       },
+      keyframes: {
+        'ken-burns': {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.08)' },
+        },
+        'ken-burns-subtle': {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.05)' },
+        },
+      },
+      animation: {
+        'ken-burns': 'ken-burns 22s ease-out forwards',
+        'ken-burns-subtle': 'ken-burns-subtle 18s ease-out forwards',
+      },
     },
   },
   plugins: [],

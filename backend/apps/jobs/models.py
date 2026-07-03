@@ -1,4 +1,12 @@
+import os
+import uuid
+
 from django.db import models
+
+
+def job_image_upload_path(instance, filename):
+    ext = os.path.splitext(filename)[1].lower()
+    return f'jobs/{uuid.uuid4()}{ext}'
 
 
 class Department(models.Model):
@@ -33,6 +41,7 @@ class JobOffer(models.Model):
         blank=True,
         help_text='Clé image frontend (commercial, logistique, it, etc.)',
     )
+    image = models.FileField(upload_to=job_image_upload_path, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

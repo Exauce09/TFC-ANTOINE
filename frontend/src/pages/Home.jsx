@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { jobsAPI } from '../api/client'
 import { IMAGES, getJobImage } from '../assets/images'
+import AnimatedImage from '../components/AnimatedImage'
 
 export default function Home() {
   const [featuredJobs, setFeaturedJobs] = useState([])
@@ -17,16 +18,9 @@ export default function Home() {
     <div>
       {/* Hero */}
       <section className="relative min-h-[520px] flex items-center text-white overflow-hidden">
-        <img
-          src={IMAGES.hero}
-          alt="Équipe Maison Galaxy"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <AnimatedImage variant="hero" src={IMAGES.hero} alt="Équipe Maison Galaxy" />
         <div className="absolute inset-0 bg-gradient-to-r from-galaxy-900/95 via-galaxy-700/85 to-galaxy-700/60" />
         <div className="relative max-w-7xl mx-auto px-4 py-20 w-full">
-          <span className="inline-block bg-white/20 backdrop-blur px-3 py-1 rounded-full text-sm mb-4">
-            Espace public — Carrières Maison Galaxy
-          </span>
           <h1 className="text-4xl md:text-6xl font-bold mb-4 max-w-3xl leading-tight">
             Construisez votre avenir avec Maison Galaxy Kinshasa
           </h1>
@@ -71,7 +65,7 @@ export default function Home() {
       {/* À propos + image */}
       <section className="max-w-7xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center">
         <div className="relative rounded-2xl overflow-hidden shadow-xl h-80">
-          <img src={IMAGES.kinshasa} alt="Kinshasa" className="w-full h-full object-cover" />
+          <AnimatedImage variant="gallery" src={IMAGES.kinshasa} alt="Kinshasa" className="w-full h-full" />
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
             <p className="text-white font-medium">Maison Galaxy — Kinshasa, RDC</p>
           </div>
@@ -112,7 +106,7 @@ export default function Home() {
               {featuredJobs.map((job) => (
                 <div key={job.id} className="bg-white rounded-2xl shadow-sm border overflow-hidden hover:shadow-md transition-shadow">
                   <div className="h-36 relative overflow-hidden">
-                    <img src={getJobImage(job)} alt={job.title} className="w-full h-full object-cover" />
+                    <AnimatedImage variant="card" src={getJobImage(job)} alt={job.title} />
                     <span className="absolute bottom-3 left-3 text-white text-sm font-medium bg-black/50 backdrop-blur px-2 py-1 rounded">
                       {job.department_name}
                     </span>
@@ -146,7 +140,7 @@ export default function Home() {
             { img: IMAGES.careers, title: 'Suivi transparent', desc: 'Consultez le statut de votre dossier depuis votre espace candidat.' },
           ].map((item) => (
             <div key={item.title} className="rounded-2xl overflow-hidden border bg-white shadow-sm">
-              <img src={item.img} alt={item.title} className="w-full h-44 object-cover" />
+              <AnimatedImage variant="gallery" src={item.img} alt={item.title} className="w-full h-44" />
               <div className="p-6">
                 <h3 className="font-bold text-lg text-galaxy-700 mb-2">{item.title}</h3>
                 <p className="text-slate-600 text-sm">{item.desc}</p>
@@ -158,7 +152,7 @@ export default function Home() {
 
       {/* CTA final */}
       <section className="relative py-20 text-white overflow-hidden">
-        <img src={IMAGES.office} alt="Bureaux" className="absolute inset-0 w-full h-full object-cover" />
+        <AnimatedImage variant="banner" src={IMAGES.office} alt="Bureaux" />
         <div className="absolute inset-0 bg-galaxy-900/80" />
         <div className="relative max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Prêt à rejoindre Maison Galaxy ?</h2>
